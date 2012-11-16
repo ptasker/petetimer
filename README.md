@@ -1,4 +1,4 @@
 petetimer
 =========
 
-PeteTimer
+First attempt at Android application development.
