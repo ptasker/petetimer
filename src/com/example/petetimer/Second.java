@@ -11,7 +11,11 @@ import android.widget.TextView;
 
 public class Second extends Activity {
 	private TextView text;
-	
+	private Integer worktime;
+	private Integer rest_timer;
+	private Integer interval;
+	public Integer n;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -19,14 +23,20 @@ public class Second extends Activity {
 
 		// Get the message from the intent
 		Intent intent = getIntent();
-		String message = intent.getStringExtra(MainActivity.TIMER_WORK);
+		String work_timer = intent.getStringExtra(MainActivity.TIMER_WORK);
+
+		rest_timer = Integer.parseInt(intent
+				.getStringExtra(MainActivity.TIMER_REST)) * 1000;
+
+		interval = Integer.parseInt(intent
+				.getStringExtra(MainActivity.TIMER_INTERVAL));
+
 		text = (TextView) findViewById(R.id.textView1);
-		
-		Integer worktime = Integer.parseInt(message) * 1000;
-		
+
+		worktime = Integer.parseInt(work_timer) * 1000;
+
 		this.startWorkTimer(worktime);
-		
-		
+
 		// // Create the text view
 		// TextView textView = new TextView(this);
 		// textView.setTextSize(40);
@@ -39,19 +49,34 @@ public class Second extends Activity {
 
 	public void startWorkTimer(Integer length) {
 
-		new CountDownTimer(length, 1000) {
+			 new CountDownTimer(length, 1000) {
 
-			public void onTick(long millisUntilFinished) {
+				public void onTick(long millisUntilFinished) {
 
-				text.setText("seconds remaining: " + millisUntilFinished / 1000);
-			}
+					text.setText("Work 00: " + millisUntilFinished / 1000);
+				}
 
-			public void onFinish() {
-				text.setText("done!");
-			}
+				public void onFinish() {
 
-		}.start();
+					new CountDownTimer(rest_timer, 1000) {
 
+						public void onTick(long millisUntilFinished) {
+							text.setText("Rest 00: " + millisUntilFinished
+									/ 1000);
+						}
+
+						public void onFinish() {
+							text.setText("done!");
+							
+						}
+
+					}.start();
+
+				}
+
+			}.start();
+			
+		
 	}
 
 	@Override
