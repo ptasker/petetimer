@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -15,7 +16,7 @@ public class Second extends Activity {
 	private Integer rest_timer;
 	private Integer interval;
 	public Integer n;
-
+	private static final String TAG = "MyActivity";
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,7 +35,7 @@ public class Second extends Activity {
 		text = (TextView) findViewById(R.id.textView1);
 
 		worktime = Integer.parseInt(work_timer) * 1000;
-
+		n = 1;
 		this.startWorkTimer(worktime);
 
 		// // Create the text view
@@ -66,8 +67,15 @@ public class Second extends Activity {
 						}
 
 						public void onFinish() {
-							text.setText("done!");
 							
+							n++;
+							//Log.v(TAG, "meesage" + n);
+							
+							if( n <= interval ){
+								startWorkTimer(worktime);
+							}else{
+								text.setText("done!");
+							}
 						}
 
 					}.start();
