@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import com.example.petetimer.CountDownTimerTwo;
 
 public class Second extends Activity {
 	private TextView text;
@@ -35,7 +36,9 @@ public class Second extends Activity {
 		text = (TextView) findViewById(R.id.textView1);
 
 		worktime = Integer.parseInt(work_timer) * 1000;
+		
 		n = 1;
+		
 		this.startWorkTimer(worktime);
 
 		// // Create the text view
@@ -62,8 +65,7 @@ public class Second extends Activity {
 					new CountDownTimer(rest_timer, 1000) {
 
 						public void onTick(long millisUntilFinished) {
-							text.setText("Rest 00: " + millisUntilFinished
-									/ 1000);
+							text.setText("Rest 00: " + millisUntilFinished/ 1000);
 						}
 
 						public void onFinish() {
