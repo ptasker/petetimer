@@ -9,8 +9,17 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:text="TextView"
+        android:textSize="85px" />
 
-        android:textSize="55px"
-        android:text="TextView" />
+    <Button
+        android:id="@+id/timeraction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="73dp"
+        android:text="Pause"
+        android:onClick="btnClick" />
 
 </RelativeLayout>
