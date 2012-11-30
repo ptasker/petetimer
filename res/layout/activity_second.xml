@@ -9,17 +9,35 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="TextView"
+        android:text="00:00:00"
         android:textSize="85px" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="74dp"
+        android:textSize="55px"
+        android:text="Work" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/timeraction"
+        android:layout_alignBottom="@+id/timeraction"
+        android:layout_toRightOf="@+id/textView2"
+        android:text="Reset" />
 
     <Button
         android:id="@+id/timeraction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="73dp"
-        android:text="Pause"
-        android:onClick="btnClick" />
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="52dp"
+        android:layout_toLeftOf="@+id/textView2"
+        android:text="Pause" />
 
 </RelativeLayout>

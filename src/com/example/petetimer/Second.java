@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,10 @@ public class Second extends Activity {
 	public long s1;
 	public long s2;
 	public String stage;
+	public CountDownTimer mastertimer;
+	public CountDownTimer resttimer;
+	public String status;
+	public TextView WorkingStatus;
 
 	private static final String TAG = "MyActivity";
 
@@ -37,6 +42,8 @@ public class Second extends Activity {
 				.getStringExtra(MainActivity.TIMER_INTERVAL));
 
 		text = (TextView) findViewById(R.id.textView1);
+		WorkingStatus = (TextView) findViewById(R.id.textView2);
+		WorkingStatus.setText("Work " + n);
 
 		worktime = Integer.parseInt(work_timer) * 1000;
 
@@ -44,19 +51,88 @@ public class Second extends Activity {
 
 		this.startWorkTimer(worktime);
 
-		// // Create the text view
-		// TextView textView = new TextView(this);
-		// textView.setTextSize(40);
-		// textView.setText(message);
-		//
-		// // Set the text view as the activity layout
-		// setContentView(textView);
+		
+		/**
+		 * 
+		 * PAUSE/RESUME BUTTON
+		 * 
+		 */
+		Button button = (Button) findViewById(R.id.timeraction);
 
+		button.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Button b1 = (Button) findViewById(R.id.timeraction);
+
+				// /Log.v(TAG, "meesage " + b1.getText());
+
+				if (status == "running") {
+
+					if (stage == "work") {
+					
+						mastertimer.cancel();
+					
+					} else if (stage == "rest") {
+						
+						resttimer.cancel();
+					}
+
+					status = "stopped";
+
+					b1.setText("Resume");
+
+				} else if (status == "stopped") {
+
+					long time = worktime;
+
+					if (stage == "work") {
+						time = s1;
+					} else if (stage == "rest") {
+						time = s2;
+					}
+
+					Integer inttime = (int) time;
+					startWorkTimer(inttime);
+
+					b1.setText("Pause");
+				}
+
+			}
+		});
+		
+		/**
+		 * 
+		 * RESET BUTTON
+		 * 
+		 */
+		
+		Button button2 = (Button) findViewById(R.id.button1);
+		
+		button2.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				
+				WorkingStatus.setText("Work");
+				
+				//Reset counter
+				n = 1;
+				if (stage == "work") {
+					
+					mastertimer.cancel();
+					startWorkTimer(worktime);
+					
+				} else if (stage == "rest") {
+					
+					resttimer.cancel();
+					startWorkTimer(worktime);
+				}
+
+			}
+		});
 	}
 
 	public void startWorkTimer(Integer length) {
+		status = "running";
 
-		new CountDownTimer(length, 1000) {
+		mastertimer = new CountDownTimer(length, 1000) {
 
 			public void onTick(long millisUntilFinished) {
 				stage = "work";
@@ -67,7 +143,9 @@ public class Second extends Activity {
 
 			public void onFinish() {
 
-				new CountDownTimer(rest_timer, 1000) {
+				WorkingStatus.setText("Rest " + n);
+
+				resttimer = new CountDownTimer(rest_timer, 1000) {
 
 					public void onTick(long millisUntilFinished) {
 
@@ -82,10 +160,10 @@ public class Second extends Activity {
 						n++;
 						// Log.v(TAG, "meesage" + n);
 						if (n <= interval) {
-
+							WorkingStatus.setText("Work " + n);
 							startWorkTimer(worktime);
-
 						} else {
+							WorkingStatus.setText("");
 							text.setText("done!");
 						}
 					}
@@ -96,14 +174,6 @@ public class Second extends Activity {
 
 		}.start();
 
-	}
-
-	public void btnClick(View view) {
-
-		Button btn = (Button) findViewById(R.id.timeraction);
-
-		
-		
 	}
 
 	public String formatTime(long millis) {
