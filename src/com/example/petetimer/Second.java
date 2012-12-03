@@ -2,12 +2,13 @@ package com.example.petetimer;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class Second extends Activity {
@@ -24,6 +25,15 @@ public class Second extends Activity {
 	public String status;
 	public TextView WorkingStatus;
 
+	public String work_msg_str;
+	public String rest_msg_str;
+
+	// Layout
+	public RelativeLayout ll;
+
+	// bool on whether or not to run rest timer
+	public boolean do_rest;
+
 	private static final String TAG = "MyActivity";
 
 	@Override
@@ -31,8 +41,18 @@ public class Second extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_second);
 
+		// Count variable - incremented in onFinish() method of rest portion
+		n = 1;
+
+		// Whether or not to run the rest period. Only used with pause/resume
+		// functionality
+		do_rest = true;
+
+		ll = (RelativeLayout) findViewById(R.id.TimerLayout);
+
 		// Get the message from the intent
 		Intent intent = getIntent();
+
 		String work_timer = intent.getStringExtra(MainActivity.TIMER_WORK);
 
 		rest_timer = Integer.parseInt(intent
@@ -42,16 +62,17 @@ public class Second extends Activity {
 				.getStringExtra(MainActivity.TIMER_INTERVAL));
 
 		text = (TextView) findViewById(R.id.textView1);
+
+		work_msg_str = intent.getStringExtra(MainActivity.WORK_MSG);
+		rest_msg_str = intent.getStringExtra(MainActivity.REST_MSG);
+
 		WorkingStatus = (TextView) findViewById(R.id.textView2);
-		WorkingStatus.setText("Work " + n);
+		WorkingStatus.setText(work_msg_str);
 
 		worktime = Integer.parseInt(work_timer) * 1000;
 
-		n = 1;
-
 		this.startWorkTimer(worktime);
 
-		
 		/**
 		 * 
 		 * PAUSE/RESUME BUTTON
@@ -68,11 +89,11 @@ public class Second extends Activity {
 				if (status == "running") {
 
 					if (stage == "work") {
-					
+
 						mastertimer.cancel();
-					
+
 					} else if (stage == "rest") {
-						
+
 						resttimer.cancel();
 					}
 
@@ -86,41 +107,50 @@ public class Second extends Activity {
 
 					if (stage == "work") {
 						time = s1;
+						Integer inttime = (int) time;
+						startWorkTimer(inttime);
 					} else if (stage == "rest") {
-						time = s2;
-					}
+						// Flip the do_rest variable to false so that we don't
+						// run the rest period twice
+						do_rest = false;
 
-					Integer inttime = (int) time;
-					startWorkTimer(inttime);
+						time = s2;
+						Integer inttime = (int) time;
+						startWorkTimer(inttime);
+					}
 
 					b1.setText("Pause");
 				}
 
 			}
 		});
-		
+
 		/**
 		 * 
 		 * RESET BUTTON
 		 * 
 		 */
-		
+
 		Button button2 = (Button) findViewById(R.id.button1);
-		
+
 		button2.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				
-				WorkingStatus.setText("Work");
-				
-				//Reset counter
+				Button b1 = (Button) findViewById(R.id.timeraction);
+				WorkingStatus.setText(work_msg_str);
+
+				// Reset counter
 				n = 1;
 				if (stage == "work") {
-					
+
+					b1.setText("Resume");
+
 					mastertimer.cancel();
 					startWorkTimer(worktime);
-					
+
 				} else if (stage == "rest") {
-					
+
+					b1.setText("Pause");
+
 					resttimer.cancel();
 					startWorkTimer(worktime);
 				}
@@ -129,12 +159,51 @@ public class Second extends Activity {
 		});
 	}
 
+	public void startRestTimer(Integer length) {
+
+		ll.setBackgroundColor(Color.RED);
+
+		WorkingStatus.setText(rest_msg_str);
+
+		resttimer = new CountDownTimer(rest_timer, 1000) {
+
+			public void onTick(long millisUntilFinished) {
+
+				stage = "rest";
+				s2 = millisUntilFinished;
+
+				text.setText(formatTime(millisUntilFinished));
+			}
+
+			public void onFinish() {
+				n++;
+
+				// Log.v(TAG, "meesage" + n);
+				if (n <= interval) {
+					
+					startWorkTimer(worktime);
+				} else {
+					ll.setBackgroundColor(Color.BLUE);
+					WorkingStatus.setText("");
+					text.setText("done!");
+				}
+
+			}
+
+		}.start();
+
+	}
+
 	public void startWorkTimer(Integer length) {
+
 		status = "running";
+		WorkingStatus.setText(work_msg_str);
+		ll.setBackgroundColor(Color.GREEN);
 
 		mastertimer = new CountDownTimer(length, 1000) {
 
 			public void onTick(long millisUntilFinished) {
+
 				stage = "work";
 				s1 = millisUntilFinished;
 
@@ -142,33 +211,7 @@ public class Second extends Activity {
 			}
 
 			public void onFinish() {
-
-				WorkingStatus.setText("Rest " + n);
-
-				resttimer = new CountDownTimer(rest_timer, 1000) {
-
-					public void onTick(long millisUntilFinished) {
-
-						stage = "rest";
-						s2 = millisUntilFinished;
-
-						text.setText(formatTime(millisUntilFinished));
-					}
-
-					public void onFinish() {
-
-						n++;
-						// Log.v(TAG, "meesage" + n);
-						if (n <= interval) {
-							WorkingStatus.setText("Work " + n);
-							startWorkTimer(worktime);
-						} else {
-							WorkingStatus.setText("");
-							text.setText("done!");
-						}
-					}
-
-				}.start();
+				startRestTimer(rest_timer);
 
 			}
 

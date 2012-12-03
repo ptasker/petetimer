@@ -1,45 +1,39 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout1"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+
     <TextView
         android:id="@+id/TextView01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:text="Work:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <EditText
-        android:id="@+id/work"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number" />
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_above="@+id/repeat"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
         android:text="Repeat"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <EditText
-        android:id="@+id/repeat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number" />
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_alignBottom="@+id/rest"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="10dp"
         android:text="Rest"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -47,18 +41,91 @@
         android:id="@+id/rest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/work"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="10dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/work"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/button1"
+        android:layout_below="@+id/TextView01"
+        android:layout_marginLeft="10dp"
         android:ems="10"
         android:inputType="number" >
 
         <requestFocus />
     </EditText>
-
+
+    <EditText
+        android:id="@+id/repeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/rest"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/EditText01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/work"
+        android:layout_alignBottom="@+id/work"
+        android:layout_alignLeft="@+id/work_msg"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:ems="10"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/work_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/EditText01"
+        android:layout_marginLeft="57dp"
+        android:layout_toRightOf="@+id/work"
+        android:text="Work Msg"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/EditText02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/rest"
+        android:layout_alignBottom="@+id/rest"
+        android:layout_alignLeft="@+id/rest_msg"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:ems="10"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/rest_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/EditText02"
+        android:layout_alignLeft="@+id/EditText01"
+        android:text="Rest Msg"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/repeat"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
         android:onClick="startTimer"
         android:text="Do Workout!" />
 
-</LinearLayout>
+</RelativeLayout>
