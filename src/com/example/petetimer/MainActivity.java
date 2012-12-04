@@ -42,6 +42,9 @@ public class MainActivity extends Activity {
 		work.addTextChangedListener(watcher);
 		rest.addTextChangedListener(watcher);
 		interval.addTextChangedListener(watcher);
+		work_msg_field.addTextChangedListener(watcher);
+		rest_msg_field.addTextChangedListener(watcher);
+
 		// button.setEnabled(false);
 
 		updateButtonState();
@@ -56,8 +59,6 @@ public class MainActivity extends Activity {
 		String interval_msg = interval.getText().toString();
 		String work_msg_intent = work_msg_field.getText().toString();
 		String rest_msg_intent = rest_msg_field.getText().toString();
-		
-		
 
 		intent.putExtra(TIMER_WORK, work_msg);
 		intent.putExtra(TIMER_REST, rest_msg);
@@ -71,7 +72,8 @@ public class MainActivity extends Activity {
 
 	void updateButtonState() {
 		boolean enabled = checkEditText(work) && checkEditText(rest)
-				&& checkEditText(interval);
+				&& checkEditText(interval) && checkEditText(work_msg_field)
+				&& checkEditText(rest_msg_field);
 		button.setEnabled(enabled);
 	}
 

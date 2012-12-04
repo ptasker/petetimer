@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -84,7 +85,8 @@ public class Second extends Activity {
 			public void onClick(View v) {
 				Button b1 = (Button) findViewById(R.id.timeraction);
 
-				// /Log.v(TAG, "meesage " + b1.getText());
+				Log.v(TAG, "meesage " + stage + " status: "+status );
+				
 
 				if (status == "running") {
 
@@ -92,7 +94,7 @@ public class Second extends Activity {
 
 						mastertimer.cancel();
 
-					} else if (stage == "rest") {
+					} else if ( stage == "rest" ) {
 
 						resttimer.cancel();
 					}
@@ -109,14 +111,16 @@ public class Second extends Activity {
 						time = s1;
 						Integer inttime = (int) time;
 						startWorkTimer(inttime);
+						
 					} else if (stage == "rest") {
 						// Flip the do_rest variable to false so that we don't
 						// run the rest period twice
 						do_rest = false;
-
+						
 						time = s2;
 						Integer inttime = (int) time;
-						startWorkTimer(inttime);
+						//Log.v(TAG, "meesage here" + inttime);
+						startRestTimer(inttime);
 					}
 
 					b1.setText("Pause");
@@ -124,6 +128,9 @@ public class Second extends Activity {
 
 			}
 		});
+		
+		
+		
 
 		/**
 		 * 
@@ -136,42 +143,42 @@ public class Second extends Activity {
 		button2.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Button b1 = (Button) findViewById(R.id.timeraction);
-				WorkingStatus.setText(work_msg_str);
 
+				status = "running";
+				WorkingStatus.setText(work_msg_str);
+				ll.setBackgroundColor(Color.GREEN);
+				b1.setText("Pause");
+				
 				// Reset counter
 				n = 1;
 				if (stage == "work") {
 
-					b1.setText("Resume");
-
 					mastertimer.cancel();
-					startWorkTimer(worktime);
-
+					
 				} else if (stage == "rest") {
 
-					b1.setText("Pause");
-
 					resttimer.cancel();
-					startWorkTimer(worktime);
+			
 				}
-
+				startWorkTimer(worktime);
+				stage = "work";
 			}
 		});
 	}
 
 	public void startRestTimer(Integer length) {
-
+		status = "running";
+		stage = "rest";
+		
 		ll.setBackgroundColor(Color.RED);
-
 		WorkingStatus.setText(rest_msg_str);
-
-		resttimer = new CountDownTimer(rest_timer, 1000) {
+		
+		resttimer = new CountDownTimer(length, 1000) {
 
 			public void onTick(long millisUntilFinished) {
-
-				stage = "rest";
+				
 				s2 = millisUntilFinished;
-
+				
 				text.setText(formatTime(millisUntilFinished));
 			}
 
@@ -199,12 +206,13 @@ public class Second extends Activity {
 		status = "running";
 		WorkingStatus.setText(work_msg_str);
 		ll.setBackgroundColor(Color.GREEN);
-
+		stage = "work";
+		
 		mastertimer = new CountDownTimer(length, 1000) {
 
 			public void onTick(long millisUntilFinished) {
 
-				stage = "work";
+				
 				s1 = millisUntilFinished;
 
 				text.setText(formatTime(millisUntilFinished));
