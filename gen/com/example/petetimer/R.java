@@ -21,10 +21,11 @@ public final class R {
         public static final int TextView01=0x7f070001;
         public static final int TimerLayout=0x7f07000c;
         public static final int button1=0x7f070007;
-        public static final int menu_settings=0x7f07000f;
+        public static final int menu_settings=0x7f070010;
         public static final int repeat=0x7f070003;
         public static final int rest=0x7f070005;
         public static final int rest_msg=0x7f07000b;
+        public static final int start_button=0x7f07000f;
         public static final int textView1=0x7f07000d;
         public static final int textView2=0x7f070004;
         public static final int textView3=0x7f070002;

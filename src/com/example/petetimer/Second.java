@@ -8,6 +8,8 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +31,8 @@ public class Second extends Activity {
 	public String work_msg_str;
 	public String rest_msg_str;
 
+	public TextView rep_counter;
+	
 	// Layout
 	public RelativeLayout ll;
 
@@ -40,6 +44,10 @@ public class Second extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
 		setContentView(R.layout.activity_second);
 
 		// Count variable - incremented in onFinish() method of rest portion
@@ -72,7 +80,6 @@ public class Second extends Activity {
 
 		worktime = Integer.parseInt(work_timer) * 1000;
 
-		this.startWorkTimer(worktime);
 
 		/**
 		 * 
@@ -87,7 +94,6 @@ public class Second extends Activity {
 
 				Log.v(TAG, "meesage " + stage + " status: "+status );
 				
-
 				if (status == "running") {
 
 					if (stage == "work") {
@@ -166,6 +172,24 @@ public class Second extends Activity {
 		});
 	}
 
+	public void startTimer(View v){
+		
+		//Setup Rep Counter
+		rep_counter = (TextView) findViewById(R.id.textView3);		
+		rep_counter.setText( "Rep " + n + " of " + interval);
+		rep_counter.setVisibility(View.VISIBLE);	
+		
+		this.startWorkTimer(worktime);
+		v.setVisibility(View.GONE);
+		
+		Button button = (Button) findViewById(R.id.timeraction);
+		Button button2 = (Button) findViewById(R.id.button1);
+		
+		
+		
+		
+	}
+	
 	public void startRestTimer(Integer length) {
 		status = "running";
 		stage = "rest";
@@ -187,7 +211,7 @@ public class Second extends Activity {
 
 				// Log.v(TAG, "meesage" + n);
 				if (n <= interval) {
-					
+					rep_counter.setText( "Rep " + n + " of " + interval);
 					startWorkTimer(worktime);
 				} else {
 					ll.setBackgroundColor(Color.BLUE);
@@ -212,7 +236,6 @@ public class Second extends Activity {
 
 			public void onTick(long millisUntilFinished) {
 
-				
 				s1 = millisUntilFinished;
 
 				text.setText(formatTime(millisUntilFinished));

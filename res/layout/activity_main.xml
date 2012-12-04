@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:text="Work:"
+        android:text="Duration"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_above="@+id/repeat"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
-        android:text="Repeat"
+        android:text="Reps"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="30dp"
         android:layout_marginLeft="10dp"
-        android:text="Rest"
+        android:text="Duration"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
@@ -93,7 +93,7 @@
         android:layout_above="@+id/EditText01"
         android:layout_marginLeft="57dp"
         android:layout_toRightOf="@+id/work"
-        android:text="Work Msg"
+        android:text="Name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
@@ -114,7 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/EditText02"
         android:layout_alignLeft="@+id/EditText01"
-        android:text="Rest Msg"
+        android:text="Name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
