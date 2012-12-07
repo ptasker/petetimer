@@ -76,10 +76,14 @@ public class Second extends Activity {
 		rest_msg_str = intent.getStringExtra(MainActivity.REST_MSG);
 
 		WorkingStatus = (TextView) findViewById(R.id.textView2);
-		WorkingStatus.setText(work_msg_str);
-
+		
+		
+		
 		worktime = Integer.parseInt(work_timer) * 1000;
-
+		
+		
+		WorkingStatus.setText("Get Ready!");
+		text.setText(formatTime(worktime));
 
 		/**
 		 * 

@@ -24,26 +24,6 @@
         android:textSize="55px"
         android:text="Work" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/timeraction"
-        android:layout_alignBottom="@+id/timeraction"
-        android:layout_toRightOf="@+id/textView2"
-        android:text="Reset"
-         />
-
-    <Button
-        android:id="@+id/timeraction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="52dp"
-        android:layout_toLeftOf="@+id/textView2"
-        android:text="Pause"
-          />
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -56,13 +36,32 @@
         android:visibility="invisible"/>
 
     <Button
-        android:id="@+id/start_button"
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView3"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_marginBottom="14dp"
+        android:text="Reset" />
+
+
+
+    <Button
+        android:id="@+id/timeraction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/button1"
         android:layout_alignBottom="@+id/button1"
+        android:layout_alignLeft="@+id/textView1"
+        android:text="Pause" />
+    
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
-        android:text="Start"
-        android:onClick="startTimer" />
-
+        android:onClick="startTimer"
+        android:text="Start" />
+    
 </RelativeLayout>
