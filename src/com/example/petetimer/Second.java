@@ -153,7 +153,8 @@ public class Second extends Activity {
 		button2.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Button b1 = (Button) findViewById(R.id.timeraction);
-
+				b1.setVisibility(View.VISIBLE);
+				
 				status = "running";
 				WorkingStatus.setText(work_msg_str);
 				ll.setBackgroundColor(Color.GREEN);
@@ -189,7 +190,8 @@ public class Second extends Activity {
 		Button button = (Button) findViewById(R.id.timeraction);
 		Button button2 = (Button) findViewById(R.id.button1);
 		
-		
+		button.setVisibility(View.VISIBLE);	
+		button2.setVisibility(View.VISIBLE);	
 		
 		
 	}
@@ -220,6 +222,8 @@ public class Second extends Activity {
 				} else {
 					ll.setBackgroundColor(Color.BLUE);
 					WorkingStatus.setText("");
+					Button b1 = (Button) findViewById(R.id.timeraction);
+					b1.setVisibility(View.GONE);
 					text.setText("done!");
 				}
 
